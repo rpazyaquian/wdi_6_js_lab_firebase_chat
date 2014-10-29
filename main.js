@@ -10,20 +10,29 @@ $(document).ready(function() {
   // 2. get the updated data
   // 3. translate the data, and render/map/process
 
-  // i want to: send a message
-  $('#chat-submit').click(sendMessage);
-
   var sendMessage = function(e) {
-    var text = $('#chat-message').val();
-    pushMessage(text);
+    var message = $('#chat-message').val();
+    pushMessage(message);
     $('#chat-message').val('');
   }
 
-  var push
+  var pushMessage = function(message) {
+    postsRef.push({
+      message: message
+    });
+  }
+
+  var renderPost = function(post) {
+    // console.log(post.message);
+  }
+
+  $('#chat-submit').click(sendMessage);
 
   // i want to: render all messages
   postsRef.on('child_added', function(snapshot) {
-    renderPosts(snapshot.val());
+    var post = snapshot.val();
+    console.log(post.message);
+    renderPost(post);
   });
 
 });
